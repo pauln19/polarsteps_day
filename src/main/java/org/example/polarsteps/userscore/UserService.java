@@ -67,7 +67,7 @@ public class UserService {
                 score++;
             }
 
-            // Distnace between consecutive steps
+            // Distance between consecutive steps
             tripScore.addStep(step.getLatitude(), step.getLongitude());
             // Add to then verify location diversity score
             addLocation(locations, step.getLocationName(), step.getLocationDetail());

@@ -41,4 +41,13 @@ class ImageServiceTest {
         assertThatThrownBy(() -> imageService.getImageById(42))
                 .isInstanceOf(ResourceNotFoundException.class);
     }
+
+    @Test
+    void throwsWhenImageDoesHaveNullPath() {
+        Image imageWithoutPath = new Image();
+        when(imageRepository.findById(42)).thenReturn(Optional.of(imageWithoutPath));
+
+        assertThatThrownBy(() -> imageService.getImageById(42))
+                .isInstanceOf(ResourceNotFoundException.class);
+    }
 }

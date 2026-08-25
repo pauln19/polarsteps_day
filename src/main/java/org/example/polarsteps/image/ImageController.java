@@ -3,10 +3,9 @@ package org.example.polarsteps.image;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.NonNull;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/image")
@@ -24,4 +23,8 @@ public class ImageController {
         return ResponseEntity.ok(imageService.getImageById(imageId));
     }
 
+    @GetMapping("/closest")
+    public ResponseEntity<List<ImageDtos.ImageResponse>> getImageById(@RequestBody CoordinateDto coordinates) {
+        return ResponseEntity.ok(imageService.getClosestImagesToCoordinate(coordinates));
+    }
 }
