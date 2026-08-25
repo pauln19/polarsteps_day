@@ -1,0 +1,77 @@
+spring:
+  application:
+    name: polarsteps
+
+  threads:
+    virtual:
+      enabled: true
+
+  docker:
+    compose:
+      lifecycle-management: start-only
+      enabled: false
+
+  datasource:
+    url: jdbc:postgresql://backend-assignment.cncjqdd32vzs.us-east-1.rds.amazonaws.com:5432/polarsteps
+    username: assignment_user
+    password: Wg!7k-_LoVpiA!uDo
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 3000
+      validation-timeout: 1000
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+    properties:
+      jakarta.persistence.query.timeout: 3000
+
+  flyway:
+    enabled: false
+
+  http:
+    client:
+      connect-timeout: 2s
+      read-timeout: 5s
+
+  data:
+    web:
+      pageable:
+        default-page-size: 20
+        max-page-size: 100
+
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+
+server:
+  shutdown: graceful
+  tomcat:
+    connection-timeout: 5s
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
+  observations:
+    annotations:
+      enabled: false
+  tracing:
+    sampling:
+      probability: 1.0
+    export:
+      enabled: false
+  opentelemetry:
+    enabled: false
+    tracing:
+      export:
+        otlp:
+          endpoint: http://localhost:4318/v1/traces
