@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ImageServiceTest {
@@ -27,18 +27,18 @@ class ImageServiceTest {
     void returnsImageResponseWhenImageExists() {
         Image image = new Image();
         image.setPath("/images/42.jpg");
-        given(this.imageRepository.findById(42)).willReturn(Optional.of(image));
+        when(imageRepository.findById(42)).thenReturn(Optional.of(image));
 
-        ImageDtos.ImageResponse response = this.imageService.getImageById(42);
+        ImageDtos.ImageResponse response = imageService.getImageById(42);
 
         assertThat(response.path()).isEqualTo("/images/42.jpg");
     }
 
     @Test
     void throwsWhenImageDoesNotExist() {
-        given(this.imageRepository.findById(42)).willReturn(Optional.empty());
+        when(imageRepository.findById(42)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> this.imageService.getImageById(42))
+        assertThatThrownBy(() -> imageService.getImageById(42))
                 .isInstanceOf(ResourceNotFoundException.class);
     }
 }

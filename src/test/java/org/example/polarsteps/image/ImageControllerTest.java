@@ -9,7 +9,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
 @WebMvcTest(ImageController.class)
 class ImageControllerTest {
@@ -22,10 +22,9 @@ class ImageControllerTest {
 
     @Test
     void returnsImageById() {
-        given(this.imageService.getImageById(42))
-                .willReturn(new ImageDtos.ImageResponse("/images/42.jpg"));
+        when(imageService.getImageById(42)).thenReturn(new ImageDtos.ImageResponse("/images/42.jpg"));
 
-        assertThat(this.mvc.get().uri("/api/image/{id}", 42))
+        assertThat(mvc.get().uri("/api/image/{id}", 42))
                 .hasStatus(HttpStatus.OK)
                 .hasContentTypeCompatibleWith(MediaType.APPLICATION_JSON)
                 .bodyJson()
